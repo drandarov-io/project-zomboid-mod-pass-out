@@ -1,0 +1,13 @@
+Sandbox_EN = {
+	Sandbox_PassOutHours = "Pass Out Hours",
+	Sandbox_PassOutHours_tooltip = "How many hours need to pass after reaching Tiredness Level 4 before you will pass out",
+
+	Sandbox_PassOutRandomness = "Pass Out Randomness",
+	Sandbox_PassOutRandomness_tooltip = "PassOutHours can randomly increase/decrease by a factor between 0 and this percentage multiplied by PassOutHours<br>0.0 means no randomness<br>1.0 means PassOutHours are between 0*PassOutHours and 2*PassOutHours<br>0.5 means PassOutHours are between 0.5*PassOutHours and 1.5*PassOutHours, etc.",
+
+	Sandbox_PassingOutTime = "Passing Out Minutes",
+	Sandbox_PassingOutTime_tooltip = "Over how many in-game minute you will gradually pass out",
+
+	Sandbox_PassOutWarn = "Pass Out Warning",
+	Sandbox_PassOutWarn_tooltip = "Show a warning 10 in-game minutes before you will start gradually passing out",
+}

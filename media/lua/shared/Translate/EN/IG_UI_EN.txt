@@ -1,0 +1,5 @@
+IGUI_EN = {
+    IGUI_PassOut_Warning = "You are about to start passing out..."
+    IGUI_PassOut = "You are passing out..."
+    IGUI_PanicSave = "Panic is keeping you awake..."
+}

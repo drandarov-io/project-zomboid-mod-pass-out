@@ -1,0 +1,7 @@
+name=Pass out
+id=pass-out
+modversion=1.0.0
+pzversion=41+
+poster=poster.png
+description=Causes your character to fall asleep on the spot if you have max tiredness for X in-game hours. The amount of hours and whether a warning is given, is configurable in the sandbox options. This is intended for a more hardcore playthrough. Compatible with Single- and Multiplayer.
+url=https://github.com/drandarov-io/project-zomboid-mod-pass-out
