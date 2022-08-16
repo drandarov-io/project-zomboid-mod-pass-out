@@ -4,14 +4,15 @@ function passingOutRoutine()
 
     modData.poPassOutFactor = modData.poPassOutFactor + modData.poStepFactor
     local passOutFactor = modData.poPassOutFactor
-    print("poFactor: " .. passOutFactor)
+
+    --print("poFactor: " .. passOutFactor)
 
     local mode = getSearchMode():getSearchModeForPlayer(playerObj:getPlayerNum())
     getSearchMode():setEnabled(playerObj:getPlayerNum(),true)
     mode:getBlur():setTargets(passOutFactor, passOutFactor)
     mode:getDesat():setTargets(passOutFactor, passOutFactor)
     mode:getRadius():setTargets(5 / passOutFactor,  5 / passOutFactor)
-    mode:getDarkness():setTargets(passOutFactor / 1.5, passOutFactor / 1.5)
+    mode:getDarkness():setTargets(passOutFactor / 1.2, passOutFactor / 1.2)
 
     if modData.poPassOutFactor >= 1.0 then
         -- Reset passing out when player is paniced, but reduce panic by 10 percentage points
@@ -52,11 +53,11 @@ function passOutRoutine()
         -- getGametimeTimestamp() returns the current time in seconds (600 = 10 min, 3600 = 1 hour)
         local passOutSeconds = sandboxPassOut.passOutHours * 3600 + modData.poRandomnessValue * 3600
 
-        print("timestamp: " .. getGametimeTimestamp())
-        print("poTiredTime " .. modData.poTiredTime)
-        print("secondsSinceTired: " .. secondsSinceTired)
-        print("modData.poRandomnessValue: " .. modData.poRandomnessValue)
-        print("passOutSeconds: " .. passOutSeconds)
+        --print("timestamp: " .. getGametimeTimestamp())
+        --print("poTiredTime " .. modData.poTiredTime)
+        --print("secondsSinceTired: " .. secondsSinceTired)
+        --print("modData.poRandomnessValue: " .. modData.poRandomnessValue)
+        --print("passOutSeconds: " .. passOutSeconds)
 
         -- Check whether player will start passing out
         if secondsSinceTired > passOutSeconds then

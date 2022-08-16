@@ -1,1 +1,1 @@
-rootProject.name = "pass-out"
+rootProject.name = "pass-out-mod"
