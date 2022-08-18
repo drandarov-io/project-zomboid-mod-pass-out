@@ -52,6 +52,12 @@ function passOutRoutine()
         local secondsSinceTired = getGametimeTimestamp() - modData.poTiredTime
         -- getGametimeTimestamp() returns the current time in seconds (600 = 10 min, 3600 = 1 hour)
         local passOutSeconds = sandboxPassOut.passOutHours * 3600 + modData.poRandomnessValue * 3600
+        if playerObj:HasTrait("ProneToPassing") then
+           passOutSeconds = passOutSeconds * 0.8
+        end
+        if playerObj:HasTrait("ResistantToPassing") then
+           passOutSeconds = passOutSeconds * 1.2 
+        end
 
         --print("timestamp: " .. getGametimeTimestamp())
         --print("poTiredTime " .. modData.poTiredTime)
