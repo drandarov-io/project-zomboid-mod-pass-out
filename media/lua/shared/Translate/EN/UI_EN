@@ -1,0 +1,6 @@
+UI_EN = {
+    UI_trait_ProneToPassing = "Prone To Passing Out",
+    UI_trait_ProneToPassingDesc = "Increased likelihood of passing out.<br>Less time before passing out.",
+    UI_trait_ResistantToPassing = "Resistant To Passing Out",
+    UI_trait_ResistantToPassingDesc = "Decreased likelihood of passing out.<br>More time before passing out.",
+}
