@@ -20,7 +20,14 @@ function passingOutRoutine()
             playerObj:Say(getText("IGUI_PanicSave"))
 
             local panic = playerObj:getStats():getPanic()
-            playerObj:getStats():setPanic(panic - 10)
+            local amountToDecrease = 10
+            if playerObj:HasTrait("ProneToPassing") then
+               amountToDecrease = 20
+            end
+            if playerObj:HasTrait("ResistantToPassing") then
+               amountToDecrease = 5 
+            end
+            playerObj:getStats():setPanic(panic - amountToDecrease)
             return
         end
 
@@ -68,9 +75,16 @@ function passOutRoutine()
         -- Check whether player will start passing out
         if secondsSinceTired > passOutSeconds then
             playerObj:Say(getText("IGUI_PassOut"))
+            local PassingOutTime = sandboxPassOut.passingOutTime
+            if playerObj:HasTrait("ProneToPassing") then
+               PassingOutTime = PassingOutTime * 0.5 
+            end
+            if playerObj:HasTrait("ResistantToPassing") then
+               PassingOutTime = PassingOutTime * 4 
+            end
             modData.poTiredTime = nil
             modData.poPassOutFactor = 0.0
-            modData.poStepFactor = 1.0 / sandboxPassOut.passingOutTime
+            modData.poStepFactor = 1.0 / PassingOutTime
 
             -- Switch routine
             Events.EveryTenMinutes.Remove(passOutRoutine)
