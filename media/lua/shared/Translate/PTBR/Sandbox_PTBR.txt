@@ -1,0 +1,13 @@
+Sandbox_PTBR = {
+	Sandbox_PassOutHours = "Horas para o Desmaio",
+	Sandbox_PassOutHours_tooltip = "Quantas horas se passarão, depois de alcançar o Cansaço Nível 4, até que você desmaie",
+
+	Sandbox_PassOutRandomness = "Aleatoriedade do Desmaio",
+	Sandbox_PassOutRandomness_tooltip = "As HorasParaODesmaio podem aumentar/diminuir aleatoriamente por um fator entre 0 e esta porcentagem, multiplicado por HorasParaODesmaio<br>0.0 significa não ter aleatoriedade<br>1.0 significa que HorasParaODesmaio estará entre 0*HorasParaODesmaio e 2*HorasParaODesmaio<br>0.5 significa que HorasParaODesmaio estará entre 0.5*HorasParaODesmaio e 1.5*HorasParaODesmaio etc.",
+
+	Sandbox_PassingOutTime = "Minutos Desmaiando",
+	Sandbox_PassingOutTime_tooltip = "Quantos minutos, dentro do jogo, se passarão até que você gradualmente desmaie",
+
+	Sandbox_PassOutWarn = "Aviso de Desmaio",
+	Sandbox_PassOutWarn_tooltip = "Mostrar um aviso 10 minutos antes, no tempo do jogo, de você começar a desmaiar",
+}
