@@ -20,7 +20,14 @@ function passingOutRoutine()
             playerObj:Say(getText("IGUI_PanicSave"))
 
             local panic = playerObj:getStats():getPanic()
-            playerObj:getStats():setPanic(panic - 10)
+            local amountToDecrease = 10
+            if playerObj:HasTrait("ProneToPassing") then
+               amountToDecrease = 20
+            end
+            if playerObj:HasTrait("ResistantToPassing") then
+               amountToDecrease = 5 
+            end
+            playerObj:getStats():setPanic(panic - amountToDecrease)
             return
         end
 
@@ -52,6 +59,12 @@ function passOutRoutine()
         local secondsSinceTired = getGametimeTimestamp() - modData.poTiredTime
         -- getGametimeTimestamp() returns the current time in seconds (600 = 10 min, 3600 = 1 hour)
         local passOutSeconds = sandboxPassOut.passOutHours * 3600 + modData.poRandomnessValue * 3600
+        if playerObj:HasTrait("ProneToPassing") then
+           passOutSeconds = passOutSeconds * 0.8
+        end
+        if playerObj:HasTrait("ResistantToPassing") then
+           passOutSeconds = passOutSeconds * 1.2 
+        end
 
         --print("timestamp: " .. getGametimeTimestamp())
         --print("poTiredTime " .. modData.poTiredTime)
@@ -62,9 +75,16 @@ function passOutRoutine()
         -- Check whether player will start passing out
         if secondsSinceTired > passOutSeconds then
             playerObj:Say(getText("IGUI_PassOut"))
+            local PassingOutTime = sandboxPassOut.passingOutTime
+            if playerObj:HasTrait("ProneToPassing") then
+               PassingOutTime = PassingOutTime * 0.5 
+            end
+            if playerObj:HasTrait("ResistantToPassing") then
+               PassingOutTime = PassingOutTime * 4 
+            end
             modData.poTiredTime = nil
             modData.poPassOutFactor = 0.0
-            modData.poStepFactor = 1.0 / sandboxPassOut.passingOutTime
+            modData.poStepFactor = 1.0 / PassingOutTime
 
             -- Switch routine
             Events.EveryTenMinutes.Remove(passOutRoutine)
