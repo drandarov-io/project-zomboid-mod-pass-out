@@ -1,3 +1,11 @@
+local API = SearchModeAPI
+if API then
+    API.Register("pass_out", -50)
+else
+    local empty_fn = function()end
+    API = { Lock = empty_fn, Unlock = empty_fn, Activate = empty_fn, Deactivate = empty_fn };
+end
+
 function passingOutRoutine()
     local playerObj = getPlayer()
     local modData = playerObj:getModData()
@@ -7,6 +15,7 @@ function passingOutRoutine()
 
     --print("poFactor: " .. passOutFactor)
 
+    API.Activate("pass_out")
     local mode = getSearchMode():getSearchModeForPlayer(playerObj:getPlayerNum())
     getSearchMode():setEnabled(playerObj:getPlayerNum(),true)
     mode:getBlur():setTargets(passOutFactor, passOutFactor)
@@ -33,11 +42,13 @@ function passingOutRoutine()
 
         Events.EveryOneMinute.Remove(passingOutRoutine)
         Events.EveryTenMinutes.Add(passOutRoutine)
+        API.Unlock("pass_out")
 
         -- Sleep
         ISWorldObjectContextMenu.onSleepWalkToComplete(playerObj:getPlayerNum(), nil)
         getSearchMode():setEnabled(playerObj:getPlayerNum(),false)
     end
+    API.Deactivate("pass_out")
 end
 
 function passOutRoutine()
@@ -87,6 +98,7 @@ function passOutRoutine()
             modData.poStepFactor = 1.0 / PassingOutTime
 
             -- Switch routine
+            API.Lock("pass_out")
             Events.EveryTenMinutes.Remove(passOutRoutine)
             Events.EveryOneMinute.Add(passingOutRoutine)
 
