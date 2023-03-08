@@ -15,7 +15,7 @@ function passingOutRoutine()
     mode:getDarkness():setTargets(passOutFactor / 1.2, passOutFactor / 1.2)
 
     if modData.poPassOutFactor >= 1.0 then
-        -- Reset passing out when player is paniced, but reduce panic by 10 percentage points
+        -- Reset passing out when player is panicked, but reduce panic by 10 percentage points
         if playerObj:getMoodles():getMoodleLevel(MoodleType.Panic) >= 1 then
             playerObj:Say(getText("IGUI_PanicSave"))
 
