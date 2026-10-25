@@ -1,0 +1,6 @@
+name=Pass out
+id=pass-out
+poster=poster.png
+description=Causes your character to fall asleep on the spot if you have max tiredness for X in-game hours.
+versionMin=42.0
+url=https://github.com/drandarov-io/project-zomboid-mod-pass-out

@@ -1,5 +1,5 @@
 IGUI_PTBR = {
-    IGUI_PassOut_Warning = "Em breve você irá desmaiar..."
-    IGUI_PassOut = "Você está desmaiando..."
-    IGUI_PanicSave = "O Pânico está te mantendo acordado..."
+    IGUI_PassOut_Warning = "Em breve vocÃª irÃ¡ desmaiar...",
+    IGUI_PassOut = "VocÃª estÃ¡ desmaiando...",
+    IGUI_PanicSave = "O PÃ¢nico estÃ¡ te mantendo acordado...",
 }

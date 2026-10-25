@@ -1,0 +1,40 @@
+{
+    "Sandbox_PassOut": "Pass Out",
+
+    "Sandbox_PassOut_EnableMod": "Enable Pass Out",
+    "Sandbox_PassOut_EnableMod_tooltip": "Master switch for the whole mod. Turn this off to disable passing out entirely without removing the mod from the save.",
+
+    "Sandbox_PassOutHours": "Pass Out Hours",
+    "Sandbox_PassOutHours_tooltip": "How many in-game hours you must stay at the tiredness level set below before you start passing out.<br>Set to 0 to pass out almost immediately once that level is reached.",
+
+    "Sandbox_PassOutRandomness": "Pass Out Randomness",
+    "Sandbox_PassOutRandomness_tooltip": "Randomly shifts Pass Out Hours up or down so the timing is less predictable.<br>0.0 = no randomness.<br>0.5 = between 0.5x and 1.5x Pass Out Hours.<br>1.0 = between 0x and 2x Pass Out Hours.",
+
+    "Sandbox_PassOut_TiredLevel": "Required Tiredness Level",
+    "Sandbox_PassOut_TiredLevel_tooltip": "How tired you must be for the pass-out countdown to run, matching the Tired moodle.<br>4 = Exhausted (default, hardest to avoid only when truly spent).<br>3 = Very Tired.<br>2 = Tired (most punishing).",
+
+    "Sandbox_PassingOutTime": "Passing Out Minutes",
+    "Sandbox_PassingOutTime_tooltip": "Over how many in-game minutes the screen gradually blacks out before you actually fall asleep.",
+
+    "Sandbox_PassOutWarn": "Pass Out Warning",
+    "Sandbox_PassOutWarn_tooltip": "Shows a one-time on-screen warning roughly 10 in-game minutes before you begin passing out.",
+
+    "Sandbox_PassOut_PanicKeepsAwake": "Panic Keeps You Awake",
+    "Sandbox_PassOut_PanicKeepsAwake_tooltip": "While panicking you fight off sleep instead of collapsing. Each save also reduces your panic, so heavy panic only delays the inevitable.<br>Turn off for a stricter playthrough where nothing stops you from dropping.",
+
+    "Sandbox_PassOut_ForcedSleepSeconds": "Forced Pass-Out Duration (seconds)",
+    "Sandbox_PassOut_ForcedSleepSeconds_tooltip": "Multiplayer and split-screen. After collapsing you stay knocked out for at least this many real seconds and cannot wake up early by moving - the original mod let you pop straight back up.<br>At 0 you can wake by moving after a 3-second grace, so a key you were still holding as you dropped does not cancel the collapse.",
+
+    "Sandbox_PassOut_SleepQuality": "Pass-Out Sleep Quality",
+    "Sandbox_PassOut_SleepQuality_tooltip": "How restful collapsing is, using the game's own bed-quality recovery.<br>Floor: you sleep on bare ground and barely recover - realistic but punishing, and you may even wake still tired.<br>Rough / Average / Good let you recover more, as if you'd found somewhere better to rest.<br>Default is Floor: collapsing on bare ground barely rests you.",
+    "Sandbox_PassOut_SleepQuality_option1": "Floor (barely rest)",
+    "Sandbox_PassOut_SleepQuality_option2": "Rough",
+    "Sandbox_PassOut_SleepQuality_option3": "Average",
+    "Sandbox_PassOut_SleepQuality_option4": "Good (full rest)",
+
+    "Sandbox_PassOut_CollapsePose": "Collapse Animation",
+    "Sandbox_PassOut_CollapsePose_tooltip": "Your character sinks to the ground when they pass out instead of sleeping bolt upright, and gets back to their feet on waking.<br>In multiplayer everyone running the mod sees it, so it is obvious you have dropped rather than gone AFK.<br>Turn off to keep the vanilla standing-asleep look.",
+
+    "Sandbox_PassOut_WhileDriving": "Pass Out While Driving",
+    "Sandbox_PassOut_WhileDriving_tooltip": "On: you can drop at the wheel - the car keeps rolling with no one steering and you slump onto the horn, drawing every zombie around. Exactly as dangerous as it sounds.<br>Off: collapsing is held off while you're the driver, so you stay awake until you stop or get out."
+}

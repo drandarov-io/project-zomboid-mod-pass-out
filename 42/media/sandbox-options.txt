@@ -1,0 +1,79 @@
+VERSION = 1,
+
+option PassOut.enableMod
+{
+    type = boolean, default = true,
+    page = PassOut,
+    translation = PassOut_EnableMod,
+}
+
+option PassOut.passOutHours
+{
+    type = integer, min = 0, max = 72, default = 6,
+    page = PassOut,
+    translation = PassOutHours,
+}
+
+option PassOut.passOutRandomness
+{
+    type = double, min = 0.0, max = 1.0, default = 0.2,
+    page = PassOut,
+    translation = PassOutRandomness,
+}
+
+option PassOut.tiredLevel
+{
+    type = integer, min = 2, max = 4, default = 4,
+    page = PassOut,
+    translation = PassOut_TiredLevel,
+}
+
+option PassOut.passingOutTime
+{
+    type = integer, min = 1, max = 20, default = 5,
+    page = PassOut,
+    translation = PassingOutTime,
+}
+
+option PassOut.warnPassOut
+{
+    type = boolean, default = true,
+    page = PassOut,
+    translation = PassOutWarn,
+}
+
+option PassOut.panicKeepsAwake
+{
+    type = boolean, default = true,
+    page = PassOut,
+    translation = PassOut_PanicKeepsAwake,
+}
+
+option PassOut.forcedSleepSeconds
+{
+    type = integer, min = 0, max = 600, default = 30,
+    page = PassOut,
+    translation = PassOut_ForcedSleepSeconds,
+}
+
+option PassOut.passOutSleepQuality
+{
+    type = enum, numValues = 4, default = 1,
+    page = PassOut,
+    translation = PassOut_SleepQuality,
+    valueTranslation = PassOut_SleepQuality,
+}
+
+option PassOut.collapsePose
+{
+    type = boolean, default = true,
+    page = PassOut,
+    translation = PassOut_CollapsePose,
+}
+
+option PassOut.passOutWhileDriving
+{
+    type = boolean, default = true,
+    page = PassOut,
+    translation = PassOut_WhileDriving,
+}
