@@ -1,0 +1,24 @@
+module PassOut
+{
+    character_trait_definition passout:pronetopassing
+    {
+        IsProfessionTrait = false,
+        DisabledInMultiplayer = false,
+        CharacterTrait = passout:pronetopassing,
+        Cost = -4,
+        UIName = UI_trait_ProneToPassing,
+        UIDescription = UI_trait_ProneToPassingDesc,
+        MutuallyExclusiveTraits = passout:resistanttopassing,
+    }
+
+    character_trait_definition passout:resistanttopassing
+    {
+        IsProfessionTrait = false,
+        DisabledInMultiplayer = false,
+        CharacterTrait = passout:resistanttopassing,
+        Cost = 4,
+        UIName = UI_trait_ResistantToPassing,
+        UIDescription = UI_trait_ResistantToPassingDesc,
+        MutuallyExclusiveTraits = passout:pronetopassing,
+    }
+}

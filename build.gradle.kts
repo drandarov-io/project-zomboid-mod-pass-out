@@ -41,6 +41,12 @@ val buildWorkshop by tasks.registering {
             from("media")
             into("$modPath/media")
         }
+        if (file("42").exists()) {
+            copy {
+                from("42")
+                into("$modPath/42")
+            }
+        }
     }
 }
 
