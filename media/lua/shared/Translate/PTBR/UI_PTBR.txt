@@ -1,0 +1,6 @@
+UI_PTBR = {
+    UI_trait_ProneToPassing = "Propenso a Desmaiar",
+    UI_trait_ProneToPassingDesc = "Maior probabilidade de desmaiar.<br>Menos tempo antes de desmaiar.",
+    UI_trait_ResistantToPassing = "Resistente a Desmaiar",
+    UI_trait_ResistantToPassingDesc = "Menor probabilidade de desmaiar.<br>Mais tempo antes de desmaiar.",
+}
