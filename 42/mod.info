@@ -1,5 +1,6 @@
 name=Pass out
 id=pass-out
+modversion=2.1.0
 poster=poster.png
 description=Causes your character to fall asleep on the spot if you have max tiredness for X in-game hours.
 versionMin=42.0

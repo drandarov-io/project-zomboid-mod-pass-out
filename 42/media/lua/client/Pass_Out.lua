@@ -681,6 +681,48 @@ local function passOutTick()
     end)
 end
 
+---------------------------------------------------------------------------
+-- Character creation: offer the traits only where passing out can happen
+---------------------------------------------------------------------------
+
+local function isPassOutTrait(trait)
+    cachedProneTrait = cachedProneTrait or getRegisteredTrait("passout:pronetopassing")
+    cachedResistantTrait = cachedResistantTrait or getRegisteredTrait("passout:resistanttopassing")
+    local t = trait:getType()
+    return t == cachedProneTrait or t == cachedResistantTrait
+end
+
+local isTraitEnabled = CharacterCreationProfession.isTraitEnabled
+function CharacterCreationProfession:isTraitEnabled(trait)
+    if not (modEnabled() and sleepAllowed()) and isPassOutTrait(trait) then return false end
+    return isTraitEnabled(self, trait)
+end
+
+-- The trait lists are filled when the main menu is built, before the options
+-- that apply are known: the sandbox screen of a new game only sets them after
+-- showing this screen, and a server sends them after the Lua reload on join.
+local prerender = CharacterCreationProfession.prerender
+function CharacterCreationProfession:prerender()
+    local available = modEnabled() and sleepAllowed()
+    if self.poTraitsAvailable ~= available then
+        self.poTraitsAvailable = available
+        if not available then
+            for i = #self.listboxTraitSelected.items, 1, -1 do
+                if isPassOutTrait(self.listboxTraitSelected.items[i].item) then self:removeTrait(i) end
+            end
+        end
+        self:repopulateTraitLists()
+    end
+    prerender(self)
+end
+
 Events.EveryOneMinute.Add(passOutTick)
 Events.OnPlayerUpdate.Add(onPlayerUpdate)
 Events.OnTick.Add(updateRemoteSleepers)
+
+-- forEachLocalPlayer skips the dead, so without this a death mid-blackout
+-- leaves the foraging override (and the Viewpoint overlay) on until the game
+-- is quit to the menu.
+Events.OnPlayerDeath.Add(function(playerObj)
+    clearState(playerObj, playerObj:getModData())
+end)
