@@ -146,18 +146,24 @@ end
 local VIGNETTE_BANDS = 12
 
 local function viewpointActive()
-    local vp = Viewpoint
+    local vp = Viewpoint ---@diagnostic disable-line: undefined-global
     if not (vp and vp.View and vp.View.next) then return false end
     -- next() offers "first" exactly when its 3D view is off.
     return vp.View.next() ~= "first"
 end
 
+---@class PassOutBlackoutUI : ISUIElement
+---@field pnum integer
+---@field target number
+---@field shown number
+---@field lastMs number
 local BlackoutUI = ISUIElement:derive("PassOutBlackoutUI")
+---@type table<integer, PassOutBlackoutUI?>
 local blackoutUIs = {}
 
 function BlackoutUI:new(pnum)
     local o = ISUIElement.new(self, getPlayerScreenLeft(pnum), getPlayerScreenTop(pnum),
-        getPlayerScreenWidth(pnum), getPlayerScreenHeight(pnum))
+        getPlayerScreenWidth(pnum), getPlayerScreenHeight(pnum)) --[[@as PassOutBlackoutUI]]
     o.pnum = pnum
     o.target = 0
     o.shown = 0
@@ -208,7 +214,7 @@ end
 
 -- Only built once Viewpoint is actually loaded; costs nothing without it.
 local function setViewpointBlackout(pnum, f)
-    if Viewpoint == nil then return end
+    if Viewpoint == nil then return end ---@diagnostic disable-line: undefined-global
     local ui = blackoutUIs[pnum]
     if not ui then
         ui = BlackoutUI:new(pnum)
@@ -436,7 +442,8 @@ local function forceSleep(playerObj, md, sv)
     if sv.passOutSleepQuality and sv.passOutSleepQuality > 1 then
         bedType = PASSOUT_BED_TYPES[sv.passOutSleepQuality]
     elseif ISWorldObjectContextMenu and ISWorldObjectContextMenu.getBedQuality then
-        bedType = ISWorldObjectContextMenu.getBedQuality(playerObj, nil)
+        -- A nil bed rates the player's own square (floor, pillow, vehicle seat).
+        bedType = ISWorldObjectContextMenu.getBedQuality(playerObj, nil) ---@diagnostic disable-line: param-type-mismatch
     end
     if not bedType then bedType = "floor" end
 
@@ -473,12 +480,13 @@ local function forceSleep(playerObj, md, sv)
         holdMovement(playerObj, md, true)
     end
 
-    -- Slumping at the wheel: lean on the horn (drawing every zombie around) and
-    -- let the car coast/careen - you're not braking. Stops on wake (see below).
+    -- Slumping at the wheel: lean on the horn (drawing every zombie around) unless
+    -- the sandbox turns it off, and let the car coast/careen - you're not braking.
+    -- The horn stops on wake (see below).
     local veh = playerObj:getVehicle()
     if veh and veh:isDriver(playerObj) then
         playerObj:playSound("VehicleGoToSleep")
-        if veh:hasHorn() then
+        if sv.hornWhilePassedOut ~= false and veh:hasHorn() then
             setHorn(playerObj, true)
             md.poHonking = true
         end
@@ -576,7 +584,9 @@ local function advancePassingOut(playerObj, md, sv)
     mode:getDarkness():setTargets(f / 1.2, f / 1.2)
     setViewpointBlackout(pnum, f)
 
-    if f >= 1.0 then
+    -- The epsilon absorbs the rounding of summed 1/passingOutTime steps, which
+    -- would otherwise add a minute for e.g. 6 or 7 minutes.
+    if f >= 1.0 - 1e-9 then
         -- Optionally, panic keeps you on your feet a little longer. Each save
         -- shaves 10 points off panic so it eventually gives way.
         local panicKeepsAwake = sv.panicKeepsAwake

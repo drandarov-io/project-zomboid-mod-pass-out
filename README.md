@@ -8,6 +8,16 @@ Dual-build compatible with **Build 42** (primary) and **Build 41** (backport).
 
 ---
 
+### Thumbnail
+
+<img src="workshop/poster.png" alt="Screenshot" width="800">
+
+### Credits
+- Original mod & concept by **DahakaMVl** (Dmitrij Drandarov)
+- Build 42 port, traits, collapse animations & multiplayer fixes by **turnip**
+
+---
+
 ### Features:
 
 - **Build 42 & Build 41 Dual Support**:
@@ -26,7 +36,7 @@ Dual-build compatible with **Build 42** (primary) and **Build 41** (backport).
   - Movement lockout prevents the common MP instant-wake glitch where a held movement key would immediately cancel the collapse.
 - **Vehicle Support**:
   - Slumping over the wheel honks the car horn and lets the car roll on until you stop or wake up.
-  - Toggleable via sandbox options.
+  - Passing out at the wheel and the horn are separate sandbox toggles. The horn toggle is Build 42 only; Build 41 always honks.
 - **Project Viewpoint Compatibility**:
   - Includes a UI-layer darkening vignette overlay when Viewpoint's first/third-person 3D mode is active.
 - **Configurable Sandbox Options**:
@@ -40,6 +50,7 @@ Dual-build compatible with **Build 42** (primary) and **Build 41** (backport).
   - Pass-Out Sleep Quality (Floor, Rough, Average, Good).
   - Collapse Animation toggle.
   - Pass Out While Driving toggle.
+  - Honk When Passing Out at the Wheel toggle (Build 42).
 
 ---
 
@@ -57,7 +68,8 @@ Dual-build compatible with **Build 42** (primary) and **Build 41** (backport).
 | Forced Pass-Out Duration (seconds) | 30 | MP and split-screen — real seconds you stay knocked out before moving wakes you. |
 | Pass-Out Sleep Quality | Floor | How restful a collapse is (Floor → Good), using engine bed-quality recovery. |
 | Collapse Animation | on | B42 only — sink to the ground when you drop instead of sleeping upright. |
-| Pass Out While Driving | on | Drop at the wheel: car keeps rolling and you slump onto the horn. |
+| Pass Out While Driving | on | Drop at the wheel: the car keeps rolling. |
+| Honk When Passing Out at the Wheel | on | B42 only: slump onto the horn when you drop at the wheel. Build 41 always honks. |
 
 ---
 
@@ -65,7 +77,23 @@ Dual-build compatible with **Build 42** (primary) and **Build 41** (backport).
 
 `42/` is the Build 42 version. The root `media/` and `workshop/mod.info` are the Build 41 version.
 
-Deploying needs PowerShell 7 and [project-zomboid-mod-toolkit](https://github.com/drandarov-io/project-zomboid-mod-toolkit) cloned next to this repository:
+| Prerequisite | Needed for |
+|--------------|------------|
+| PowerShell 7 | All scripts |
+| [project-zomboid-mod-toolkit](https://github.com/drandarov-io/project-zomboid-mod-toolkit) cloned next to this repository | All scripts |
+| LuaJIT on `PATH`: `winget install DEVCOM.LuaJIT`, then a new terminal | Unit tests |
+| The toolkit's workspace `.emmyrc.json` in the folder above both repositories and its `setup-umbrella.ps1` run once, see [Tooling](https://github.com/drandarov-io/project-zomboid-mod-toolkit/blob/master/MODDING.md#tooling) | Static check |
+
+#### Running the tests
+
+```powershell
+.\test.ps1                    # static check of the Build 42 Lua, then the unit tests
+.\test.ps1 -Filter pass_out   # only tests\pass_out*_spec.lua
+```
+
+The static check runs `emmylua_check` against the Umbrella stubs and the vanilla Lua and skips the Build 41 `media/`. The unit tests in [tests/pass_out_spec.lua](tests/pass_out_spec.lua) load the real Build 42 Lua under LuaJIT with the game API faked in [tests/mocks.lua](tests/mocks.lua). [tests/SPEC.md](tests/SPEC.md) describes the behaviour they check. The script exits with 1 if the check reports an error or a test fails. Rendering, animations, sounds and multiplayer sync need the in-game tests in [tests/MANUALTESTS.md](tests/MANUALTESTS.md).
+
+#### Deploying
 
 ```powershell
 .\deploy_local.ps1            # copies the mod to %UserProfile%\Zomboid\Workshop\pass-out
@@ -76,36 +104,17 @@ The game lists the deployed copy as a local mod. The general debug tools, reload
 
 #### Testing on Build 42
 
-1. Add `-debug` to the game's Steam launch options.
-2. Run `.\deploy_local.ps1` and enable Pass out in Mods on the main menu.
-3. Start a sandbox game with these values on the Pass Out page:
+The in-game tests, their setup and the debug tools they use are in [tests/MANUALTESTS.md](tests/MANUALTESTS.md).
 
-   | Option | Test value | Effect |
-   |--------|------------|--------|
-   | Pass Out Hours | 0 | Warning on the first in-game minute at the required tiredness, blackout starts on the next |
-   | Pass Out Randomness | 0 | No random offset |
-   | Passing Out Minutes | 1 to 5 | 1 collapses in the same minute the blackout appears, higher values show the fade |
+#### Publishing
 
-4. Push the character to Exhausted with the Fatigue slider (debug menu, General debuggers, Body) or the Lua console: `getPlayer():getStats():set(CharacterStat.FATIGUE, 1)`.
-5. After a code change, run `.\deploy_local.ps1`, quit to the main menu and load the save again. Do not use the per-file reload of the debug Lua file browser: it runs `Pass_Out.lua` again on top of the loaded copy and doubles its event handlers.
+`workshop/workshop.txt` holds the Workshop item ID (2850167382), title, description, tags and visibility. Every upload replaces the title, description, tags, visibility and preview image of the Workshop page with these values, so edit them there and not in the uploader: the uploader only writes to the deployed copy, which the next deploy overwrites. Tags not listed in the game's `media/WorkshopTags.txt` are dropped.
 
-| Scenario | Steps | Expected |
-|----------|-------|----------|
-| Collapse | Wait at Exhausted | "You are about to start passing out...", then "You are passing out...", the screen fades and the character sits down asleep. Moving wakes them up only after Forced Pass-Out Duration in MP and split-screen |
-| Panic save | After the warning, run `getPlayer():getStats():set(CharacterStat.PANIC, 100)` | At the end of the fade, "Panic is keeping you awake..." every minute until the panic moodle is gone, then the collapse |
-| Traits | Create a character with Enable Pass Out on, then one with it off | Both traits are listed only when it is on |
-| Death during the fade | With god mode off and Passing Out Minutes above 1, run `getPlayer():Kill(nil)` during the fade and respawn | The new character's screen is normal and foraging search mode works |
-| Driving | Exhaust the character while driving | Collapse at the wheel with the horn on while the car rolls on. With Pass Out While Driving off, the collapse waits until the character leaves the driver seat |
-| Split-screen | In game, press A on a second controller to add a player, exhaust both | Each player has its own countdown, fade and collapse |
-| Multiplayer | Host from a `-debug` game. In the server settings, add the mod on the Mods page and turn on `SleepAllowed` and `SleepNeeded` on the Players page | Same as single-player. With either option off, the traits are not offered and nothing happens |
+1. Raise `modversion` in `42/mod.info`, and in `workshop/mod.info` when the Build 41 version changed.
+2. Run `.\test.ps1`, then `.\deploy_local.ps1`.
+3. Start the game through Steam. `-debug` isn't needed.
+4. Main menu, WORKSHOP, Create and update items, select `pass-out`, Next.
+5. Check the details read from `workshop.txt`, Next.
+6. Edit Change Notes, then Upload to Steam Workshop now!.
 
-Trait registration writes `[PassOut]` lines to `%UserProfile%\Zomboid\console.txt`.
-
----
-
-### Thumbnail
-![Thumbnail](workshop/poster.png)
-
-### Credits
-- Original mod & concept by **DahakaMVl** (Dmitrij Drandarov)
-- Build 42 port, traits, collapse animations & multiplayer fixes by **turnip**
+The uploader's pages and validation rules are in the toolkit's [Publishing to the Workshop](https://github.com/drandarov-io/project-zomboid-mod-toolkit/blob/master/MODDING.md#publishing-to-the-workshop).

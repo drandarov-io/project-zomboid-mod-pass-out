@@ -77,3 +77,10 @@ option PassOut.passOutWhileDriving
     page = PassOut,
     translation = PassOut_WhileDriving,
 }
+
+option PassOut.hornWhilePassedOut
+{
+    type = boolean, default = true,
+    page = PassOut,
+    translation = PassOut_Horn,
+}

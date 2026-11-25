@@ -25,5 +25,7 @@
     "Sandbox_PassOut_CollapsePose": "Anima\u00e7\u00e3o de Desmaio",
     "Sandbox_PassOut_CollapsePose_tooltip": "Seu personagem senta no ch\u00e3o ao desmaiar em vez de ficar em p\u00e9 dormindo, e levanta ao acordar.",
     "Sandbox_PassOut_WhileDriving": "Desmaiar ao Dirigir",
-    "Sandbox_PassOut_WhileDriving_tooltip": "Ligado: voc\u00ea pode desmaiar ao volante e debru\u00e7ar sobre a buzina enquanto o ve\u00edculo continua rolando."
+    "Sandbox_PassOut_WhileDriving_tooltip": "Ligado: voc\u00ea pode desmaiar ao volante enquanto o ve\u00edculo continua rolando e, com Buzinar ao Desmaiar no Volante ligado, debru\u00e7ar sobre a buzina.",
+    "Sandbox_PassOut_Horn": "Buzinar ao Desmaiar no Volante",
+    "Sandbox_PassOut_Horn_tooltip": "Ligado: o motorista que desmaia se debru\u00e7a sobre a buzina at\u00e9 acordar ou a bateria acabar, atraindo todos os zumbis por perto.<br>Desligado: o ve\u00edculo continua rolando, mas em sil\u00eancio."
 }
